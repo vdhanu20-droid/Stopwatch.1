@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>To-Do Web App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1f1f2e;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #ffd700;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: #2c2c3a;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px #444;
+    }
+    input, button {
+      padding: 10px;
+      margin: 5px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: none;
+    }
+    input[type="text"], input[type="datetime-local"] {
+      background: #fff;
+      color: #000;
+    }
+    button {
+      background: #ffd700;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #3a3a4f;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .completed {
+      text-decoration: line-through;
+      color: #aaa;
+    }
+    .actions button {
+      margin-left: 5px;
+    }
+  </style>
+</head>
+<body>
+  <h1>📝 To-Do App</h1>
+  <div class="container">
+    <input type="text" id="taskInput" placeholder="Enter your task" />
+    <input type="datetime-local" id="taskDateTime" />
+    <button onclick="addTask()">Add Task</button>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    let tasks = [];
+
+    function addTask() {
+      const taskText = document.getElementById("taskInput").value.trim();
+      const taskDateTime = document.getElementById("taskDateTime").value;
+
+      if (!taskText) {
+        alert("Please enter a task");
+        return;
+      }
+
+      const task = {
+        id: Date.now(),
+        text: taskText,
+        dateTime: taskDateTime,
+        completed: false
+      };
+
+      tasks.push(task);
+      document.getElementById("taskInput").value = "";
+      document.getElementById("taskDateTime").value = "";
+      renderTasks();
+    }
+
+    function renderTasks() {
+      const taskList = document.getElementById("taskList");
+      taskList.innerHTML = "";
+
+      tasks.forEach(task => {
+        const li = document.createElement("li");
+        li.className = task.completed ? "completed" : "";
+
+        li.innerHTML = `
